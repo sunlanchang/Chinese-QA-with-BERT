@@ -12,8 +12,8 @@ $ tree -L 1
 ├── optimization.py                 # 优化算法
 ├── run_cmrc2018.sh                 # 运行BERT模型bash脚本
 ├── run_cmrc2018_drcd_baseline.py   # 运行BERT模型python文件
-├── squad                           # 存放模型训练后的权重
-├── squad_base                      # 模型需要的数据
+├── output                           # 存放模型训练后的权重
+├── squad_base                      # 训练集、验证集
 ├── tokenization.py                 # 中文分词
 └── uncased_L-2_H-128_A-2           # BERT预训练权重，可从官方BERT GitHub下载
 ```
@@ -28,7 +28,7 @@ tensorflow==1.15
 `bash run_cmrc2018.sh`中：
 ```bash
 export PATH_TO_BERT=uncased_L-2_H-128_A-2
-export DATA_DIR=squad
+export DATA_DIR=output
 export MODEL_DIR=/tmp/squad_base/
 python run_cmrc2018_drcd_baseline.py \                     # 训练的入口python文件
 	--vocab_file=${PATH_TO_BERT}/vocab_zh.txt \            # 指定模型需要的中文词典

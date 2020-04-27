@@ -54,7 +54,9 @@ python run_cmrc2018_drcd_baseline.py \                     # 训练的入口pyth
 ```
 python cmrc2018_evaluate.py squad/cmrc2018_dev.json output/dev_predictions.json
 ```
+
 结果：
+
 ```
 {"AVERAGE": "10.601", "F1": "17.878", "EM": "3.324", "TOTAL": 3219, "SKIP": 0, "FILE": "output/dev_predictions.json"}
 ```

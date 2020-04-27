@@ -2,7 +2,7 @@
 针对CMRC中文阅读理解任务的BERT机器阅读理解模型。
 ## 文件结构
 ```
-tree -L 1
+$ tree -L 1
 .
 ├── LICENSE                         
 ├── README.md

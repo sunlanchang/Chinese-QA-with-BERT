@@ -48,3 +48,7 @@ python run_cmrc2018_drcd_baseline.py \
 	--do_lower_case=True \
 	--use_tpu=False
 ```
+## 参考
+- [官方Github BERT](https://github.com/google-research/bert)
+- [GitHub Chinese BERT](https://github.com/ymcui/Chinese-BERT-wwm)
+- [CMRC2018的baseline](https://github.com/ymcui/cmrc2018/tree/master/baseline)

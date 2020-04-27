@@ -30,23 +30,23 @@ tensorflow==1.15
 export PATH_TO_BERT=uncased_L-2_H-128_A-2
 export DATA_DIR=squad
 export MODEL_DIR=/tmp/squad_base/
-python run_cmrc2018_drcd_baseline.py \
-	--vocab_file=${PATH_TO_BERT}/vocab_zh.txt \
-	--bert_config_file=${PATH_TO_BERT}/bert_config.json \
-	--do_train=True \
-	--init_checkpoint=${PATH_TO_BERT}/bert_model.ckpt \
-	--train_file=${DATA_DIR}/cmrc2018_train.json \
-	--do_predict=True \
-	--predict_file=${DATA_DIR}/cmrc2018_dev.json \
-	--train_batch_size=32 \
-	--num_train_epochs=50 \
-	--max_seq_length=512 \
+python run_cmrc2018_drcd_baseline.py \                     # 训练的入口python文件
+	--vocab_file=${PATH_TO_BERT}/vocab_zh.txt \            # 指定模型需要的中文词典
+	--bert_config_file=${PATH_TO_BERT}/bert_config.json \  # 指定bert的网络结构
+	--do_train=True \                                      # 是否训练模型
+	--init_checkpoint=${PATH_TO_BERT}/bert_model.ckpt \    # 加载的预训练检查点
+	--train_file=${DATA_DIR}/cmrc2018_train.json \         # 训练数据
+	--do_predict=True \                                    # 训练结束是否做预测
+	--predict_file=${DATA_DIR}/cmrc2018_dev.json \         # 验证集
+	--train_batch_size=32 \                                # batch size大小
+	--num_train_epochs=50 \                                # epoch
+	--max_seq_length=512 \                                 # 输入模型的最长句子
 	--doc_stride=128 \
-	--learning_rate=3e-5 \
-	--save_checkpoints_steps=1000 \
-	--output_dir=${MODEL_DIR} \
-	--do_lower_case=True \
-	--use_tpu=False
+	--learning_rate=3e-5 \                                 # 学习率
+	--save_checkpoints_steps=1000 \                        # 每1000个batch保存一次检查点
+	--output_dir=${MODEL_DIR} \                            # 保存检查点位置
+	--do_lower_case=True \                                 # 字母是否小写
+	--use_tpu=False                                        # 是否使用TPU
 ```
 ## 参考
 - [官方Github BERT](https://github.com/google-research/bert)

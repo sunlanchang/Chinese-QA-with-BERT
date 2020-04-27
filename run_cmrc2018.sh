@@ -1,6 +1,3 @@
-# export PATH_TO_BERT=uncased_L-12_H-768_A-12
-# export PATH_TO_BERT=chinese-bert_chinese_wwm_L-12_H-768_A-12
-# export PATH_TO_BERT=chinese_L-12_H-768_A-12
 export PATH_TO_BERT=uncased_L-2_H-128_A-2
 export DATA_DIR=squad
 export MODEL_DIR=/tmp/squad_base/

@@ -48,6 +48,17 @@ python run_cmrc2018_drcd_baseline.py \                     # 训练的入口pyth
 	--do_lower_case=True \                                 # 字母是否小写
 	--use_tpu=False                                        # 是否使用TPU
 ```
+
+## Evaluate
+
+```
+python cmrc2018_evaluate.py squad/cmrc2018_dev.json output/dev_predictions.json
+```
+结果：
+```
+{"AVERAGE": "10.601", "F1": "17.878", "EM": "3.324", "TOTAL": 3219, "SKIP": 0, "FILE": "output/dev_predictions.json"}
+```
+
 ## 预测结果例子
 上下文：
 

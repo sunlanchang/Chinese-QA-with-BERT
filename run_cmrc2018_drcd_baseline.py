@@ -816,7 +816,7 @@ def model_fn_builder(bert_config, init_checkpoint, learning_rate,
 
 def input_fn_builder(input_file, seq_length, is_training, drop_remainder):
     """Creates an `input_fn` closure to be passed to TPUEstimator."""
-
+    # BERT的输入
     name_to_features = {
         "unique_ids": tf.FixedLenFeature([], tf.int64),
         "input_ids": tf.FixedLenFeature([seq_length], tf.int64),
@@ -826,6 +826,7 @@ def input_fn_builder(input_file, seq_length, is_training, drop_remainder):
     }
 
     if is_training:
+        # 标签即问题的答案，用于loss计算
         name_to_features["start_positions"] = tf.FixedLenFeature([], tf.int64)
         name_to_features["end_positions"] = tf.FixedLenFeature([], tf.int64)
 
@@ -1258,6 +1259,14 @@ def main(_):
     num_train_steps = None
     num_warmup_steps = None
     if FLAGS.do_train:
+        '''
+        train_examples是一个list，其中每一个元素为一个SquadExample，list长度为问题的个数。
+        举例example[0]为：
+            qas_id: TRAIN_2022_QUERY_3, question_text: 为什么鄂图曼军队纷纷丢弃阵地向内陆退却？,
+            doc_tokens: [英 法 两 国 投 入 战 役 共 计 62 艘 战 舰 以 及 大 量 辅 助 船 只 ， 并 指 定 英 国 皇 家 海 军 地 中 海 舰 队 司 令 萨 克 维 尔 · 卡 登 上 将 负 责 指 挥 这 次 战 役 。 舰 队 从 1915 年 2 月 19 日 起 开 始 炮 轰 达 达 尼 尔 海 峡 。 3 月 18 日 ， 16 艘 军 舰 企 图 强 行 闯 入 狭 窄 的 海 峡 通 道 ， 4 艘 军 舰 触 发 水 雷 ， 舰 只 慌 忙 撤 退 。 在 陆 地 上 ， 鄂 图 曼 军 队 因 遭 受 突 然 袭 击 ， 纷 纷 丢 弃 阵 地 向 内 陆 退 却 ， 英 国 突 击 部 队 在 没 有 遇 到 抵 抗 的 情 况 下 冲 上 海 岸 。 德 国 军 事 顾 问 奥 托 · 冯 · 桑 德 斯 洞 悉 对 方 计 划 登 陆 加 里 波 利 ， 火 速 调 动 军 队 至 战 区 。 鄂 图 曼 军 队 掘 壕 坚 守 ， 依 据 半 岛 复 杂 的 地 形 建 立 了 强 大 的 防 御 体 系 ， 又 在 该 地 集 结 炮 兵 部 队 。 在 英 法 军 队 准 备 扩 大 战 果 时 ， 隐 蔽 在 阵 地 中 的 鄂 图 曼 士 兵 一 起 开 火 ， 把 正 在 攀 登 悬 崖 的 英 军 打 的 措 手 不 及 。 3 月 3 日 ， 联 军 的 首 轮 登 陆 行 动 宣 告 失 败 ， 卡 登 上 将 因 伤 送 回 英 国 。],
+            start_position: 128, 
+            end_position: 133
+        '''
         train_examples = read_squad_examples(
             input_file=FLAGS.train_file, is_training=True)
         # Pre-shuffle the input to avoid having to make a very large shuffle
@@ -1270,14 +1279,6 @@ def main(_):
         train_writer = FeatureWriter(
             filename=os.path.join(FLAGS.output_dir, "train.tf_record"),
             is_training=True)
-        '''
-        examples是一个list，其中每一个元素为一个SquadExample，list长度为问题的个数。
-        举例example[0]为：
-            qas_id: TRAIN_2022_QUERY_3, question_text: 为什么鄂图曼军队纷纷丢弃阵地向内陆退却？,
-            doc_tokens: [英 法 两 国 投 入 战 役 共 计 62 艘 战 舰 以 及 大 量 辅 助 船 只 ， 并 指 定 英 国 皇 家 海 军 地 中 海 舰 队 司 令 萨 克 维 尔 · 卡 登 上 将 负 责 指 挥 这 次 战 役 。 舰 队 从 1915 年 2 月 19 日 起 开 始 炮 轰 达 达 尼 尔 海 峡 。 3 月 18 日 ， 16 艘 军 舰 企 图 强 行 闯 入 狭 窄 的 海 峡 通 道 ， 4 艘 军 舰 触 发 水 雷 ， 舰 只 慌 忙 撤 退 。 在 陆 地 上 ， 鄂 图 曼 军 队 因 遭 受 突 然 袭 击 ， 纷 纷 丢 弃 阵 地 向 内 陆 退 却 ， 英 国 突 击 部 队 在 没 有 遇 到 抵 抗 的 情 况 下 冲 上 海 岸 。 德 国 军 事 顾 问 奥 托 · 冯 · 桑 德 斯 洞 悉 对 方 计 划 登 陆 加 里 波 利 ， 火 速 调 动 军 队 至 战 区 。 鄂 图 曼 军 队 掘 壕 坚 守 ， 依 据 半 岛 复 杂 的 地 形 建 立 了 强 大 的 防 御 体 系 ， 又 在 该 地 集 结 炮 兵 部 队 。 在 英 法 军 队 准 备 扩 大 战 果 时 ， 隐 蔽 在 阵 地 中 的 鄂 图 曼 士 兵 一 起 开 火 ， 把 正 在 攀 登 悬 崖 的 英 军 打 的 措 手 不 及 。 3 月 3 日 ， 联 军 的 首 轮 登 陆 行 动 宣 告 失 败 ， 卡 登 上 将 因 伤 送 回 英 国 。],
-            start_position: 128, 
-            end_position: 133
-        '''
         convert_examples_to_features(
             examples=train_examples,
             tokenizer=tokenizer,

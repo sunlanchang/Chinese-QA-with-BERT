@@ -17,6 +17,11 @@ $ tree -L 1
 ├── tokenization.py                 # 中文分词
 └── uncased_L-2_H-128_A-2           # BERT预训练权重，可从官方BERT GitHub下载
 ```
+
+## 训练流程图
+
+![BERT训练流程图](QAwithBERT.png)
+
 ## 安装
 ```bash
 tensorflow==1.15

@@ -1,6 +1,6 @@
 export PATH_TO_BERT=uncased_L-2_H-128_A-2
 export DATA_DIR=squad
-export MODEL_DIR=/tmp/squad_base/
+export MODEL_DIR=output
 python run_cmrc2018_drcd_baseline.py \
 	--vocab_file=${PATH_TO_BERT}/vocab_zh.txt \
 	--bert_config_file=${PATH_TO_BERT}/bert_config.json \

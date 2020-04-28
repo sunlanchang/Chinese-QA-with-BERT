@@ -20,7 +20,7 @@ $ tree -L 1
 
 ## 训练流程图
 
-![BERT训练流程图](QAwithBERT.png)
+![BERT训练流程图](QAwithBERT.pdf)
 
 ## 安装
 ```bash
